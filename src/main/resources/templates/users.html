@@ -10,14 +10,21 @@
 <h1>Список пользователей</h1>
 <table>
     <tr>
-        <th>ID</th>
+        <th>№</th>
         <th>Имя</th>
         <th>Возраст</th>
+        <th>Действия</th>
     </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">ID</td>
+    <tr th:each="user, iterStat : ${users}">
+        <td th:text="${iterStat.index + 1}">№</td>
         <td th:text="${user.name}">Имя</td>
         <td th:text="${user.age}">Возраст</td>
+        <td>
+            <form th:action="@{/users/del}" method="post" >
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
     </tr>
 </table>
 <h2>Добавить нового пользователя</h2>
@@ -25,9 +32,6 @@
     <p>Имя: <input type="text" name="name" required/></p>
     <p>Возраст: <input type="number" name="age" min="0" required/></p>
     <button type="submit">Добавить пользователя</button>
-</form>
-<form th:action="@{/users}" method="get">
-    <button type="submit">Обновить таблицу</button>
 </form>
 </body>
 </html>
